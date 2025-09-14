@@ -358,6 +358,7 @@ public class Archivo {
         abrirParaLeerEscribir();
         try {
             grabarRegistro(r);
+            System.out.println("Pasa por acaaaaa");
         } catch (Exception e) {
             System.out.println("Error al grabar el registro: " + e.getMessage());
             System.exit(1);

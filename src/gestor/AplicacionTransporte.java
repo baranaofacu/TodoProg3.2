@@ -9,7 +9,7 @@ public class AplicacionTransporte {
 
     private static Archivo archivoConductor;
     private static Archivo archivoTransporte;
-    private static final String RUTA_ARCHIVO_CONDUCTOR = "CONDUCTOR.dat";
+    private static final String RUTA_ARCHIVO_CONDUCTOR = "CONDUCTORES.dat";
     private static final String RUTA_ARCHIVO_TRANSPORTE = "TRANSPORTE.dat";
     private static final int LIMITE_CARACTERES = 120;
     private static int contador = 0;
@@ -28,9 +28,9 @@ public class AplicacionTransporte {
 
     public static void inicializarArchivoTransporte() {
         try {
-            archivoTransporte = new Archivo(RUTA_ARCHIVO_TRANSPORTE, new TransporteBase());
+            archivoTransporte = new Archivo(RUTA_ARCHIVO_TRANSPORTE, new TransporteMercaderia());
             if (!archivoTransporte.getFd().exists()) {
-                archivoTransporte.crearArchivoVacio(new Registro(new TransporteBase(), 0));
+                archivoTransporte.crearArchivoVacio(new Registro(new TransportePersonas(), 0));
             }
         } catch (ClassNotFoundException e) {
             System.out.println("Error al crear los descriptores de archivos: " + e.getMessage());
@@ -40,7 +40,6 @@ public class AplicacionTransporte {
 
     public void cargarConductores() {
         archivoConductor.abrirParaLeerEscribir();
-
         try {
             Conductor dato = new Conductor();
             dato.cargarNroOrd(obtenerNroOrdenParaNuevo(archivoConductor));
@@ -92,12 +91,12 @@ public class AplicacionTransporte {
     public void ver() {
         archivoTransporte.abrirParaLectura();
         archivoTransporte.irPrincipioArchivo();
-        Trasnporte dato;
+        Transporte dato;
 
         while (!archivoTransporte.eof()) {
             Registro reg = archivoTransporte.leerRegistro();
             if (reg.getActivo()) {
-                dato = (Trasnporte) reg.getDatos();
+                dato = (Transporte) reg.getDatos();
                 if (dato instanceof TransportePersonas p) {
                     p.mostrarRegistro();
                 } else if (dato instanceof TransporteMercaderia p) {
@@ -106,10 +105,6 @@ public class AplicacionTransporte {
             }
         }
         archivoTransporte.cerrarArchivo();
-    }
-
-    public void listarTransporte() {
-
     }
 
     public boolean buscarPorDni(long dniBuscado, Archivo a) {
@@ -157,7 +152,7 @@ public class AplicacionTransporte {
         archivoTransporte.abrirParaLeerEscribir();
         do {
             try {
-                Trasnporte t = Trasnporte.cargarTipoT();
+                Transporte t = Transporte.cargarTipoT();
                 t.cargarCodT(obtenerNroOrdenParaNuevo(archivoTransporte));
                 do {
                     ConsolaS.mostrarlinea("Ingrese el dni del conductor: ");
@@ -181,8 +176,6 @@ public class AplicacionTransporte {
         inicializarArchivoConductor();
         int op;
         Menu miMenu = new Menu();
-        File f = new File("CONDUCTORES.dat");
-        System.out.println("Tamaño del archivo: " + f.length() + " bytes");
 
         do {
             miMenu.verItems("Gestion de transporte");

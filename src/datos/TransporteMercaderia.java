@@ -5,13 +5,13 @@ import excepcionesPersonalizadas.DatosInvalidosException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class TransporteMercaderia extends Trasnporte {
+public class TransporteMercaderia extends Transporte {
 
     private double tonelada; //8 bytes
     private boolean esPeligroso; //1 byte
-    //25 + 8 + 1 = 34
+    //26 + 8 + 1 = 35
 
-    private static final int TAMAREG = 34;
+    private static final int TAMAREG = 35;
     private static final int TAMARCHIVO = 100;
 
     public TransporteMercaderia() {

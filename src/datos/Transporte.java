@@ -8,19 +8,19 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import persistencia.Grabable;
 
-public abstract class Trasnporte implements Grabable, ICalculable, Validable {
+public abstract class Transporte implements Grabable, ICalculable, Validable {
 
     private int codT; // 4bytes
-    private char tipoTransporte; //1  bytes
+    private char tipoTransporte; //2  bytes
     private int horas; //4 bytes
     private long dniConductor; //8 bytes
     private double extra; //8 bytes
-    //4 + 1 + 4 +8 + 8 = 25
+    //4 + 2 + 4 +8 + 8 = 26
     private final double sueldoBase = 400000.0;
-    private static int TAMAREG = 25;
+    private static int TAMAREG = 26;
     private static int TAMARCHIVO = 100;
 
-    public Trasnporte() {
+    public Transporte() {
         this.codT = 0;
         this.tipoTransporte = ' ';
         this.horas = 0;
@@ -82,6 +82,7 @@ public abstract class Trasnporte implements Grabable, ICalculable, Validable {
     }
 
     public void cargarCodT(int cont) throws Exception {
+        System.out.println("Pasa por aca");
         if (cont < TAMARCHIVO) {
             setCodT(cont++);
             ConsolaS.mostrarLinea("Nro de transporte asignado: " + getCodT());
@@ -90,8 +91,8 @@ public abstract class Trasnporte implements Grabable, ICalculable, Validable {
         }
     }
 
-    public static Trasnporte cargarTipoT() {
-        Trasnporte t = null;
+    public static Transporte cargarTipoT() {
+        Transporte t = null;
         char tipo = ' ';
         boolean valido = false;
         do {

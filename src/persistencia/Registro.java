@@ -150,8 +150,12 @@ public class Registro implements Grabable {
             System.exit(1);
         }
     }
+    
+    
+    
 
-    /**
+    /**2
+     * 
      * Lee desde un archivo un String de "tam" caracteres. Se declara static
      * para que pueda ser usado en forma global por cualquier clase que requiera
      * leer una cadena de longitud fija desde un archivo.

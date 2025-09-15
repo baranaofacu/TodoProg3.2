@@ -7,10 +7,10 @@ import java.io.RandomAccessFile;
 public class TransportePersonas extends Transporte {
 
     private int cantPasajeros;//4bytes
-    //26+ 4 = 29
-    //forzamos que el TAMREG sea de 34 para evitar errores de archivos 
+    //26+ 4 = 30
+    //forzamos que el TAMREG sea de 35 para evitar errores de archivos 
 
-    private static final int TAMAREG = 35;
+    private static final int TAMAREG = 30;
     private static final int TAMARCHIVO = 100;
 
     public TransportePersonas() {
@@ -40,9 +40,6 @@ public class TransportePersonas extends Transporte {
         try {
             super.grabar(a);
             a.writeInt(cantPasajeros);
-            a.writeBoolean(false); // 1 byte
-            a.writeBoolean(false); // 1 byte
-            a.writeInt(0); //5 byte
         } catch (IOException e) {
             ConsolaS.mostrarAdvertencia("Error al grabar el registro: " + e.getMessage());
             System.exit(1);
@@ -54,9 +51,6 @@ public class TransportePersonas extends Transporte {
         try {
             super.leer(a);
             cantPasajeros = a.readInt();
-            a.readBoolean(); // descartar
-            a.readBoolean(); // descartar
-            a.readInt();     // descartar
         } catch (IOException e) {
             ConsolaS.mostrarAdvertencia("Error al leer el registro: " + e.getMessage());
         }
@@ -74,6 +68,18 @@ public class TransportePersonas extends Transporte {
         setCantPasajeros(cant);
     }
 
+    @Override
+    public void mostrarRegistro() {
+        ConsolaS.mostrarLinea(super.toString() + toString());
+    }
+
+    @Override
+    public String toString() {
+        return ", cantPasajeros=" + cantPasajeros + '}';
+    }
+
+    
+    
     private void setCantPasajeros(int cantPasajeros) {
         this.cantPasajeros = cantPasajeros;
     }
@@ -85,5 +91,12 @@ public class TransportePersonas extends Transporte {
     @Override
     public double calcularExtra() {
         return 0;
+    }
+
+    @Override
+    public void modificarDatos(long dni) {
+        super.cargarDniConductor(dni);
+        cargarDatos();
+        super.cargarExtra();
     }
 }

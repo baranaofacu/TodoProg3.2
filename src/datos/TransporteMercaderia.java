@@ -81,8 +81,6 @@ public class TransporteMercaderia extends Transporte {
         resp = ConsolaE.confirmar("¿Es transporte peligroso?");
         setEsPeligroso(resp);
     }
-    
-    
 
     private void setTonelada(double toneladas) {
         this.tonelada = toneladas;
@@ -103,6 +101,23 @@ public class TransporteMercaderia extends Transporte {
     @Override
     public double calcularExtra() {
         return 0;
+    }
+
+    @Override
+    public void mostrarRegistro() {
+        ConsolaS.mostrarLinea(super.toString() + toString());
+    }
+
+    @Override
+    public String toString() {
+        return ", tonelada=" + tonelada + ", esPeligroso=" + esPeligroso + '}';
+    }
+
+    @Override
+    public void modificarDatos(long dni) {
+        super.cargarDniConductor(dni);
+        cargarDatos();
+        super.cargarExtra();
     }
 
 }

@@ -353,7 +353,6 @@ public class Archivo {
        * 
        * @return true si fue posible agregar el registro - false si no fue posible
      */
-
     public void cargarUnRegistro(Registro r) {
         abrirParaLeerEscribir();
         try {

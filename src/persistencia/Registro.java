@@ -1,5 +1,6 @@
 package persistencia;
 
+import datos.*;
 import java.io.*;
 import entradaSalida.*;
 
@@ -74,10 +75,9 @@ public class Registro implements Grabable {
     }
 
     /**
-     * Accede a los datos del registro en memoria
-     * devuelve el tipo Grabable ya que en el archivo se tratan a los datos con ese
-     * tipo
-     * 
+     * Accede a los datos del registro en memoria devuelve el tipo Grabable ya
+     * que en el archivo se tratan a los datos con ese tipo
+     *
      * @return una referencia a los datos del registro
      */
     public Grabable getDatos() {
@@ -105,8 +105,7 @@ public class Registro implements Grabable {
     }
 
     /**
-     * Devuelve cantidad de registros.
-     * Pedido por Grabable.
+     * Devuelve cantidad de registros. Pedido por Grabable.
      *
      * @return cantidad de registros.
      */
@@ -150,18 +149,38 @@ public class Registro implements Grabable {
             System.exit(1);
         }
     }
-    
-    
-    
 
-    /**2
-     * 
+    public static Registro leerRegistroPolimorfico(RandomAccessFile a) throws IOException {
+        int nroOrden = a.readInt();
+        boolean estado = a.readBoolean();
+
+        char tipo = a.readChar(); // este char lo deberías grabar en Transporte.grabar()
+
+        Transporte dato;
+        if (tipo == 'M') {
+            dato = new TransporteMercaderia();
+        } else if (tipo == 'P') {
+            dato = new TransportePersonas();
+        } else {
+            throw new IOException("Tipo de transporte desconocido: " + tipo);
+        }
+
+        dato.leer(a);
+
+        Registro reg = new Registro(dato, nroOrden);
+        reg.setActivo(estado);
+        return reg;
+    }
+
+    /**
+     * 2
+     *
      * Lee desde un archivo un String de "tam" caracteres. Se declara static
      * para que pueda ser usado en forma global por cualquier clase que requiera
      * leer una cadena de longitud fija desde un archivo.
      *
      * @param arch el archivo desde el cual se lee
-     * @param tam  la cantidad de caracteres a leer
+     * @param tam la cantidad de caracteres a leer
      * @return el String leido
      */
     public static final String readString(RandomAccessFile arch, int tam) {
@@ -183,13 +202,12 @@ public class Registro implements Grabable {
 
     /**
      * Graba en un archivo un String de "tam" caracteres. Se declara static y
-     * publico para
-     * que pueda ser usado en forma global por cualquier clase que requiera
-     * grabar una cadena de longitud fija en un archivo.
+     * publico para que pueda ser usado en forma global por cualquier clase que
+     * requiera grabar una cadena de longitud fija en un archivo.
      *
      * @param arch el archivo en el cual se graba
-     * @param cad  la cadena a a grabar
-     * @param tam  la cantidad de caracteres a grabar
+     * @param cad la cadena a a grabar
+     * @param tam la cantidad de caracteres a grabar
      */
     public static final void writeString(RandomAccessFile arch, String cad, int tam) {
         try {

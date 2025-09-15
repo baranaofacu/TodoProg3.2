@@ -72,7 +72,7 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
     @Override
     public String toString() {
         return "Trasnporte{" + "codT=" + codT + ", tipo=" + tipoTransporte + ", horas=" + horas
-                + ", dniConductor=" + dniConductor + ", extra=" + extra + '}';
+                + ", dniConductor=" + dniConductor + ", extra=" + extra;
     }
 
     @Override
@@ -80,6 +80,8 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
         cargarHoras();
         cargarExtra();
     }
+
+    public abstract void modificarDatos(long dni);
 
     public void cargarCodT(int cont) throws Exception {
         System.out.println("Pasa por aca");
@@ -91,25 +93,25 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
         }
     }
 
-    public static Transporte cargarTipoT() {
+    public static Transporte cargarTipoT(int tipo) {
         Transporte t = null;
-        char tipo = ' ';
-        boolean valido = false;
-        do {
-            ConsolaS.mostrarlinea("Ingrese el tipo de transporte (P = personas | M = mercaderias): ");
-            tipo = ConsolaE.leerCaracter();
-            tipo = Character.toUpperCase(tipo);
-            valido = tipo == 'P' || tipo == 'M';
-            if (!valido) {
-                ConsolaS.mostrarLinea("Ingresa un valor valido");
-            }
-        } while (!valido);
+//        char tipo = ' ';
+//        boolean valido = false;
+//        do {
+//            ConsolaS.mostrarlinea("Ingrese el tipo de transporte (P = personas | M = mercaderias): ");
+//            tipo = ConsolaE.leerCaracter();
+//            tipo = Character.toUpperCase(tipo);
+//            valido = tipo == 'P' || tipo == 'M';
+//            if (!valido) {
+//                ConsolaS.mostrarLinea("Ingresa un valor valido");
+//            }
+//        } while (!valido);
 
         switch (tipo) {
-            case 'P':
+            case 1:
                 t = new TransportePersonas();
                 break;
-            case 'M':
+            case 2:
                 t = new TransporteMercaderia();
                 break;
         }

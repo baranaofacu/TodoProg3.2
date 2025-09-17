@@ -1,5 +1,6 @@
 package gestor;
 
+import datos.Transporte;
 import entradaSalida.*;
 
 public class Menu {
@@ -7,6 +8,9 @@ public class Menu {
     private String[] item;
     private int cont;
     private final int N = 4;
+    
+    private static final String cabezeraTransportePersona = "\t  %-11s %-10s %-8s %-10s %-15s%n";
+    private static final String cabezeraTransporteMercaderia = "\t   %-11s %-8s %-8s %-11s %-15s %-12s%n";
 
     public Menu() {
         this.item = new String[N];
@@ -20,7 +24,7 @@ public class Menu {
 
     public void verItems(String titulo) {
         if (this.cont != 0) {
-            ConsolaS.mostrarTitulo(" "+titulo+" ", 60, '*', '*');
+            ConsolaS.mostrarTitulo(" " + titulo + " ", 60, '*', '*');
             ConsolaS.mostrarSeparador(60, '=');
             ConsolaS.mostrarTitulo("Menu principal", 60, ' ', ' ');
             for (int i = 0; i < this.cont; i++) {
@@ -47,8 +51,8 @@ public class Menu {
         }
         return opcion;
     }
-    
-    public static void subMenu(){
+
+    public static void subMenu() {
         ConsolaS.mostrarSeparador(60, '=');
         ConsolaS.mostrarTitulo("Actualizacion transporte", 60, ' ', ' ');
         ConsolaS.mostrarLinea("\t1) Altas \n"
@@ -56,5 +60,15 @@ public class Menu {
                 + "\t3) Modificaciones \n"
                 + "\t0) Salir");
     }
-    
+
+    public static void mostrarCabezera(Transporte dato) {
+        if (dato.getTipo() == 'M') {
+            System.out.printf(cabezeraTransporteMercaderia,
+                    "DNI", "Horas", "Tipo", "Extra", "Cant.Toneladas", "EsPeligroso");
+        } else {
+            System.out.printf(cabezeraTransportePersona,
+                    "DNI", "Horas", "Tipo", "Extra", "Cant.Pasajeros");
+        }
+    }
+
 }

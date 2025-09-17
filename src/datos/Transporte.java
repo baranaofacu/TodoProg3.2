@@ -71,8 +71,8 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
 
     @Override
     public String toString() {
-        return "Trasnporte{" + "codT=" + codT + ", tipo=" + tipoTransporte + ", horas=" + horas
-                + ", dniConductor=" + dniConductor + ", extra=" + extra;
+        return String.format("\t%-11d \t%-8d %-8c %-10.2f",
+                 dniConductor, horas, tipoTransporte, extra);
     }
 
     @Override
@@ -143,20 +143,23 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
     @Override
     public boolean validar(Object e) throws DatosInvalidosException {
         boolean resul = false;
-        if (e instanceof Integer entero) {
+        if (e instanceof Integer) {
+            int entero = (int) e;
             if (entero > 0 && entero < 100) {
                 resul = true;
             } else {
                 throw new DatosInvalidosException("Ingresar un numero del 1 al 100");
             }
 
-        } else if (e instanceof Character ch) {
+        } else if (e instanceof Character) {
+            char ch = (Character) e;
             if (ch == 'P' || ch == 'M') {
                 resul = true;
             } else {
                 throw new DatosInvalidosException("Ingresar un caracter valido");
             }
-        } else if (e instanceof Double d) {
+        } else if (e instanceof Double) {
+            double d = (double) e;
             if (d >= 0 && d <= 11.5) {
                 resul = true;
             } else if (d < 0) {

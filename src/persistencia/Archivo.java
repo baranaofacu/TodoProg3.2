@@ -6,6 +6,7 @@ package persistencia;
  * grabar objetos cuyo tipo y tamaño no coincida con los que se indicaron en el
  * constructor.
  */
+import datos.Transporte;
 import java.io.*;
 
 public class Archivo {
@@ -284,7 +285,8 @@ public class Archivo {
      * @param r el registro a grabar
      */
     public void grabarRegistro(Registro r) {
-        if (r != null && (r.getDatos().getClass() == tipo.getClass())) {
+        if (r != null && (r.getDatos().getClass() == tipo.getClass())  || r.getDatos() instanceof Transporte) {
+//if (r != null && (r.getDatos() instanceof TransportePersonas || r.getDatos() instanceof TransporteMercaderia)) {
             try {
                 buscarRegistro(r.getNroOrden());
                 r.grabar(maestro);
@@ -357,7 +359,6 @@ public class Archivo {
         abrirParaLeerEscribir();
         try {
             grabarRegistro(r);
-            System.out.println("Pasa por acaaaaa");
         } catch (Exception e) {
             System.out.println("Error al grabar el registro: " + e.getMessage());
             System.exit(1);

@@ -8,15 +8,18 @@ public class TransportePersonas extends Transporte {
 
     private int cantPasajeros;//4bytes
     //26+ 4 = 30
-    //forzamos que el TAMREG sea de 35 para evitar errores de archivos 
 
-    private static final int TAMAREG = 30;
+    private int relleno1;         // 4 bytes
+    private boolean relleno2; // 1 byte
+    //forzamos que el TAMREG sea de 35 para evitar errores de archivos 
+    private static final int TAMAREG = 35;
     private static final int TAMARCHIVO = 100;
 
     public TransportePersonas() {
         super();
         this.cantPasajeros = 0;
-        setTipo('P');
+        this.relleno1 = 1;
+        this.relleno2 = false;
     }
 
     @Override
@@ -33,6 +36,7 @@ public class TransportePersonas extends Transporte {
     public void cargarDatos() {
         super.cargarDatos();
         cargarCantPasajeros();
+        setTipo('P');
     }
 
     @Override
@@ -40,6 +44,8 @@ public class TransportePersonas extends Transporte {
         try {
             super.grabar(a);
             a.writeInt(cantPasajeros);
+            a.writeInt(relleno1);
+            a.writeBoolean(relleno2);
         } catch (IOException e) {
             ConsolaS.mostrarAdvertencia("Error al grabar el registro: " + e.getMessage());
             System.exit(1);
@@ -51,6 +57,8 @@ public class TransportePersonas extends Transporte {
         try {
             super.leer(a);
             cantPasajeros = a.readInt();
+            relleno1 = a.readInt();
+            relleno2 = a.readBoolean();
         } catch (IOException e) {
             ConsolaS.mostrarAdvertencia("Error al leer el registro: " + e.getMessage());
         }
@@ -75,11 +83,9 @@ public class TransportePersonas extends Transporte {
 
     @Override
     public String toString() {
-        return ", cantPasajeros=" + cantPasajeros + '}';
+        return String.format("%9d", cantPasajeros);
     }
 
-    
-    
     private void setCantPasajeros(int cantPasajeros) {
         this.cantPasajeros = cantPasajeros;
     }

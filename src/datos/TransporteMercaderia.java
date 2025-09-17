@@ -18,7 +18,6 @@ public class TransporteMercaderia extends Transporte {
         super();
         this.tonelada = 0;
         this.esPeligroso = false;
-        setTipo('M');
     }
 
     @Override
@@ -59,6 +58,7 @@ public class TransporteMercaderia extends Transporte {
         super.cargarDatos();
         cargarTonelada();
         cargaEsPeligroso();
+        setTipo('M');
     }
 
     public void cargarTonelada() {
@@ -110,7 +110,7 @@ public class TransporteMercaderia extends Transporte {
 
     @Override
     public String toString() {
-        return ", tonelada=" + tonelada + ", esPeligroso=" + esPeligroso + '}';
+        return String.format("%9.1f %11b", tonelada, esPeligroso);
     }
 
     @Override

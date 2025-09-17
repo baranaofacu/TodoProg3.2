@@ -108,7 +108,8 @@ public class Conductor implements Grabable, Validable {
 
     @Override
     public boolean validar(Object e) throws Exception {
-        if (e instanceof Long dni) {
+        if (e instanceof Long) {
+        Long dni = (Long) e;
             String dniStr = String.valueOf(dni);
             if (dniStr.length() == 8) {
                 return true;
@@ -116,7 +117,8 @@ public class Conductor implements Grabable, Validable {
                 throw new Exception("DNI incorrecto, debe tener 8 dígitos");
             }
         }
-        if (e instanceof String nom) {
+        if (e instanceof String) {
+            String nom = (String) e;
             if (!nom.isEmpty()) {
                 return true;
             } else {

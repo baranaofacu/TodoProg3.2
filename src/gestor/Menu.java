@@ -71,4 +71,10 @@ public class Menu {
         }
     }
 
+    public static void mostrarCabeceraSueldo() {
+    System.out.printf("%-20s %-12s %-15s%n", "Nombre", "DNI", "Sueldo Final");
+    System.out.println("--------------------------------------------------------------");
+}
+
+    
 }

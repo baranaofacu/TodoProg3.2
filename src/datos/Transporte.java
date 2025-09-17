@@ -16,7 +16,6 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
     private long dniConductor; //8 bytes
     private double extra; //8 bytes
     //4 + 2 + 4 +8 + 8 = 26
-    private final double sueldoBase = 400000.0;
     private static int TAMAREG = 26;
     private static int TAMARCHIVO = 100;
 
@@ -84,7 +83,6 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
     public abstract void modificarDatos(long dni);
 
     public void cargarCodT(int cont) throws Exception {
-        System.out.println("Pasa por aca");
         if (cont < TAMARCHIVO) {
             setCodT(cont++);
             ConsolaS.mostrarLinea("Nro de transporte asignado: " + getCodT());
@@ -195,7 +193,7 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
         this.dniConductor = dniConductor;
     }
 
-    private void setExtra(double extra) {
+    protected void setExtra(double extra) {
         this.extra = extra;
     }
 
@@ -217,9 +215,5 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
 
     public double getExtra() {
         return extra;
-    }
-
-    public double getSueldoBase() {
-        return sueldoBase;
     }
 }

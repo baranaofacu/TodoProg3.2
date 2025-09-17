@@ -2,6 +2,7 @@ package gestor;
 
 import datos.*;
 import entradaSalida.*;
+import excepcionesPersonalizadas.TrasporteDuplicadoException;
 import persistencia.*;
 
 public class AplicacionTransporte {
@@ -38,6 +39,7 @@ public class AplicacionTransporte {
 
     public void inicializarArchivos() {
         inicializarArchivoConductor();
+        inicializarArchivoTransporte(new TransporteMercaderia());
     }
 
     public void cargarConductores() {
@@ -66,32 +68,50 @@ public class AplicacionTransporte {
 
     private int obtenerNroOrdenParaNuevo(Archivo a) {
         a.irPrincipioArchivo();
-        int ultimoNroOrden = -1;  // valor inicial para ir guardando el mayor nroOrden
+        int ultimoNroOrden = 0;  // valor inicial para ir guardando el mayor nroOrden
         while (!a.eof()) {
             Registro reg = a.leerRegistro();
             // Voy actualizando el ULtimo nroOrden visto
             ultimoNroOrden = reg.getNroOrden();
-            // Si encuentro un hueco, reutilizo y termino
-            if (!reg.getActivo()) {
+            // si encuentro un hueco reutilizo y termino
+            if (!reg.getActivo() && ultimoNroOrden != 0) {
                 return reg.getNroOrden();
             }
         }
-        // Si no habia huecos, devuelvo el ultimo + 1
+        // si no habia huecos devuelvo el ultimo + 1
         return ultimoNroOrden + 1;
     }
 
     public void listadoDeSueldo() {
+        int cantHoras = 0;
+        double extra = 0;
+        archivoTransporte.abrirParaLectura();
         archivoConductor.abrirParaLectura();
         archivoConductor.irPrincipioArchivo();
-        Conductor dato = new Conductor();
-        ConsolaS.generarTitulosColumnas(dato.getClass(), LIMITE_CARACTERES);
+        Conductor datoC = new Conductor();
+
+        Menu.mostrarCabeceraSueldo();
+
         while (!archivoConductor.eof()) {
-            Registro reg = archivoConductor.leerRegistro();
-            if (reg.getActivo()) {
-                dato = (Conductor) reg.getDatos();
-                ConsolaS.mostrarTabulado(dato.getClass(), dato, LIMITE_CARACTERES);
+            cantHoras = 0;
+            extra = 0;
+            Registro regC = archivoConductor.leerRegistro();
+            datoC = (Conductor) regC.getDatos();
+            if (regC.getActivo()) {
+                archivoTransporte.irPrincipioArchivo();
+                while (!archivoTransporte.eof()) {
+                    Registro regT = archivoTransporte.leerRegistro();
+                    Transporte datoT = (Transporte) regT.getDatos();
+                    if (datoC.getDni() == datoT.getDniConductor() && regT.getActivo()) {
+                        cantHoras = datoT.getHoras() + cantHoras;
+                        extra = datoT.getExtra() + extra;
+                    }
+                }
+                double sueldoFinal = Conductor.calcularSueldoFinal(cantHoras, extra);
+                datoC.mostrarNombreDniSueldoFinal(sueldoFinal);
             }
         }
+                archivoTransporte.cerrarArchivo();
         archivoConductor.cerrarArchivo();
     }
 

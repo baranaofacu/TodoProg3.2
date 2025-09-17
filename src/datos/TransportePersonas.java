@@ -37,6 +37,7 @@ public class TransportePersonas extends Transporte {
         super.cargarDatos();
         cargarCantPasajeros();
         setTipo('P');
+        setExtra(calcularExtra());
     }
 
     @Override
@@ -96,7 +97,13 @@ public class TransportePersonas extends Transporte {
 
     @Override
     public double calcularExtra() {
-        return 0;
+        double resul;
+        if (cantPasajeros > 9) {
+            resul = 5500 * getHoras();
+        }else{
+            resul = 3000 * getHoras();
+        }
+        return resul;
     }
 
     @Override

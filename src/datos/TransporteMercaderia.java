@@ -59,6 +59,7 @@ public class TransporteMercaderia extends Transporte {
         cargarTonelada();
         cargaEsPeligroso();
         setTipo('M');
+        setExtra(calcularExtra());
     }
 
     public void cargarTonelada() {
@@ -100,7 +101,13 @@ public class TransporteMercaderia extends Transporte {
 
     @Override
     public double calcularExtra() {
-        return 0;
+        double resul;
+        if (!esPeligroso) {
+            resul = 7000 * getTonelada();
+        }else{
+            resul = 7000 * getTonelada() + 20000; 
+        } 
+        return resul;
     }
 
     @Override

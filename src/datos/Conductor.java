@@ -13,7 +13,8 @@ public class Conductor implements Grabable, Validable {
     private long dni; // 8bytes
     private String ape_Nom; //40*2
     //4 + 8 + 40*2 = 92
-    
+
+    private static final double sueldoBase = 400000.0;
     private static final int LONGITUD_APENOM = 40;
     private final int TAMAREG = 92;
     private final int TAMARCHIVO = 100;
@@ -109,7 +110,7 @@ public class Conductor implements Grabable, Validable {
     @Override
     public boolean validar(Object e) throws Exception {
         if (e instanceof Long) {
-        Long dni = (Long) e;
+            Long dni = (Long) e;
             String dniStr = String.valueOf(dni);
             if (dniStr.length() == 8) {
                 return true;
@@ -126,6 +127,18 @@ public class Conductor implements Grabable, Validable {
             }
         }
         return false;
+    }
+
+    public static double calcularSueldoFinal(int cantHoras, double extra) {
+        double resul;
+        resul = cantHoras * 7500;
+        resul = sueldoBase + resul + extra;
+        return resul;
+    }
+
+    public void mostrarNombreDniSueldoFinal(double sueldoFinal) {
+        System.out.printf("%-20s %-12d %-15.2f%n",
+                getApe_Nom(), getDni(), sueldoFinal);
     }
 
     @Override
@@ -155,5 +168,9 @@ public class Conductor implements Grabable, Validable {
 
     public String getApe_Nom() {
         return ape_Nom;
+    }
+
+    public double getSueldoBase() {
+        return sueldoBase;
     }
 }

@@ -2,7 +2,6 @@ package gestor;
 
 import datos.*;
 import entradaSalida.*;
-import excepcionesPersonalizadas.TrasporteDuplicadoException;
 import persistencia.*;
 
 public class AplicacionTransporte {
@@ -305,9 +304,11 @@ public class AplicacionTransporte {
                 Transporte t = tipo;
                 t.cargarCodT(obtenerNroOrdenParaNuevo(a));
                 do {
+                    
                     ConsolaS.mostrarlinea("Ingrese el dni del conductor: ");
                     dni = ConsolaE.leerLong();
                     valido = buscarPorDni(dni, archivoConductor, 0);
+                    
                     if (!valido) {
                         ConsolaS.mostrarAdvertencia("Ingrese un DNI que exista en archivo conductores");
                     }

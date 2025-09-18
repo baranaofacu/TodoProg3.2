@@ -84,7 +84,7 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
 
     public void cargarCodT(int cont) throws Exception {
         if (cont < TAMARCHIVO) {
-            setCodT(cont++);
+            setCodT(cont);
             ConsolaS.mostrarLinea("Nro de transporte asignado: " + getCodT());
         } else {
             throw new Exception("No se pueden crear mas registros");
@@ -93,18 +93,6 @@ public abstract class Transporte implements Grabable, ICalculable, Validable {
 
     public static Transporte cargarTipoT(int tipo) {
         Transporte t = null;
-//        char tipo = ' ';
-//        boolean valido = false;
-//        do {
-//            ConsolaS.mostrarlinea("Ingrese el tipo de transporte (P = personas | M = mercaderias): ");
-//            tipo = ConsolaE.leerCaracter();
-//            tipo = Character.toUpperCase(tipo);
-//            valido = tipo == 'P' || tipo == 'M';
-//            if (!valido) {
-//                ConsolaS.mostrarLinea("Ingresa un valor valido");
-//            }
-//        } while (!valido);
-
         switch (tipo) {
             case 1:
                 t = new TransportePersonas();

@@ -63,13 +63,12 @@ public class Conductor implements Grabable, Validable {
 
     @Override
     public void cargarDatos() {
-//        cargarDNI();
         cargarApe_Nom();
     }
 
     public void cargarNroOrd(int cont) throws Exception {
         if (cont < TAMARCHIVO) {
-            setNroOrd(cont++);
+            setNroOrd(cont);
             ConsolaS.mostrarLinea("Nro de orden asignado: " + getNroOrd());
         } else {
             throw new Exception("No se pueden crear mas registros");
@@ -92,13 +91,12 @@ public class Conductor implements Grabable, Validable {
     }
 
     public void cargarApe_Nom() {
-        Scanner sc = new Scanner(System.in);
         boolean valido = false;
         String nom = "";
         do {
             try {
                 ConsolaS.mostrarlinea("Ingrese el nombre y apellido: ");
-                nom = sc.nextLine();
+                nom = ConsolaE.leerString();
                 valido = validar(nom);
             } catch (Exception e) {
                 ConsolaS.mostrarAdvertencia(e.getMessage());
